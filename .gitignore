@@ -31,14 +31,4 @@ _testmain.go
 # external packages folder
 vendor/
 
-.idea/inspectionProfiles/
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/workspace.xml
-api.khazix.co.uk.iml
-controller/
-dao/post.go
-main
-main.go
-model/
+.idea
