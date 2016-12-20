@@ -1,0 +1,21 @@
+language: go
+go:
+ - 1.6.3
+ - release
+ - tip
+
+script:
+ - go test -v ./...
+
+deploy:
+  provider: elasticbeanstalk
+  edge: true
+  bucket: "elasticbeanstalk-us-east-1-501785938124"
+  app: "PJS Services"
+  env: "pjs-production"
+  region: "us-east-1"
+  access_key_id:
+    secure: {{access_key_id}}
+  secret_access_key:
+    secure: {{secret_access_key}}
+  skip_cleanup: true
