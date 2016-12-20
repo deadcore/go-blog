@@ -1,14 +1,30 @@
 package main
 
 import (
-	"net/http"
-	"log"
-	"./controller"
+	logger "github.com/Sirupsen/logrus"
+	"os"
+	"api.khazix.co.uk/api"
 )
 
 func main() {
+	configLogging()
 
-	err := http.ListenAndServe(":3000", controller.Router())
+	var server = api.Server{
+		Port: 3000,
+	}
 
-	log.Println(err)
+	err := server.Start()
+
+	logger.Panic(err)
+}
+
+func configLogging() {
+	// Log as JSON instead of the default ASCII formatter.
+	logger.SetFormatter(&logger.TextFormatter{})
+
+	// Output to stderr instead of stdout, could also be a file.
+	logger.SetOutput(os.Stderr)
+
+	// Only log the warning severity or above.
+	logger.SetLevel(logger.InfoLevel)
 }

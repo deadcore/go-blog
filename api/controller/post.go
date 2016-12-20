@@ -3,11 +3,10 @@ package controller
 import (
 	"net/http"
 	"github.com/julienschmidt/httprouter"
-	"api.khazix.co.uk/dao"
+	"api.khazix.co.uk/api/dao"
 	"encoding/json"
-	"api.khazix.co.uk/model"
+	"api.khazix.co.uk/api/model"
 	"bytes"
-	"strconv"
 )
 
 type PostController struct {
@@ -15,7 +14,7 @@ type PostController struct {
 }
 
 func (m *PostController) Get(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	var id, _ = strconv.ParseUint(p.ByName("id"), 10, 64)
+	var id = p.ByName("id")
 	var post, err = m.postDao.Get(id)
 
 	if err != nil {
@@ -44,9 +43,8 @@ func (m *PostController) Post(w http.ResponseWriter, r *http.Request, _ httprout
 	post = m.postDao.Save(post)
 
 	var buffer bytes.Buffer
-	var stringId = strconv.FormatUint(post.Id, 10)
 	buffer.WriteString("/post/")
-	buffer.WriteString(stringId)
+	buffer.WriteString(post.Id)
 
 	w.Header().Set("Location", buffer.String())
 	w.WriteHeader(201)

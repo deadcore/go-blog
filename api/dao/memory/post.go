@@ -1,27 +1,20 @@
 package memory
 
 import (
-	"api.khazix.co.uk/model"
-	"sync/atomic"
+	"api.khazix.co.uk/api/model"
 	"github.com/kataras/go-errors"
 )
 
 type (
-	InMemoryPostDao struct{}
+	InMemoryPostDao struct {
+
+	}
 )
 
-var arr = make([]model.Post, 16)
-
-type count32 uint64
-
-func (c *count32) increment() uint64 {
-	return atomic.AddUint64((*uint64)(c), 1)
-}
-
-func (c *count32) get() uint64 {
-	return atomic.LoadUint64((*uint64)(c))
-}
-var c count32
+var (
+	arr = make([]model.Post, 16)
+	c count64
+)
 
 func (m *InMemoryPostDao) Get(id uint64) (model.Post, error) {
 	return findOne(func(post model.Post) bool {

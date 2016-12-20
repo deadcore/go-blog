@@ -1,7 +1,7 @@
 package model
 
 type Post struct {
-	Id      uint64
+	Id      string `bson:"_id,omitempty"`
 	Content string
 	Title   string
 }
