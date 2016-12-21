@@ -32,5 +32,5 @@ _testmain.go
 vendor/
 
 .idea
-api.khazix.co.uk.iml
 main
+*.iml
