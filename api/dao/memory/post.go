@@ -3,6 +3,7 @@ package memory
 import (
 	"errors"
 	"github.com/deadcore/go-blog/api/model"
+	"strconv"
 )
 
 type (
@@ -15,14 +16,14 @@ var (
 	c   count64
 )
 
-func (m *InMemoryPostDao) Get(id uint64) (model.Post, error) {
+func (m *InMemoryPostDao) Get(id string) (model.Post, error) {
 	return findOne(func(post model.Post) bool {
 		return post.Id == id
 	})
 }
 
 func (m *InMemoryPostDao) Save(post model.Post) model.Post {
-	post.Id = c.increment()
+	post.Id = strconv.FormatUint(c.increment(), 10)
 	arr = append(arr, post)
 	return post
 }
