@@ -1,16 +1,15 @@
 package api
 
 import (
-	"net/http"
-	"github.com/deadcore/go-blog/api/controller"
-	"github.com/deadcore/go-blog/api/filter"
-	"strconv"
 	"bytes"
 	logger "github.com/Sirupsen/logrus"
+	"github.com/deadcore/go-blog/api/controller"
+	"github.com/deadcore/go-blog/api/filter"
+	"net/http"
 )
 
 type Server struct {
-	Port uint64
+	Port string
 }
 
 func (s Server) Start() error {
@@ -27,8 +26,7 @@ func (s Server) Start() error {
 
 func (s Server) bindAddress() string {
 	var buffer bytes.Buffer
-	var strPort = strconv.FormatUint(s.Port, 10)
 	buffer.WriteString("127.0.0.1:")
-	buffer.WriteString(strPort)
+	buffer.WriteString(s.Port)
 	return buffer.String()
 }

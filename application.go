@@ -9,8 +9,13 @@ import (
 func main() {
 	configLogging()
 
+	port, present := os.LookupEnv("PORT")
+	if !present {
+		port = "5000"
+	}
+
 	var server = api.Server{
-		Port: 3000,
+		Port: port,
 	}
 
 	err := server.Start()
