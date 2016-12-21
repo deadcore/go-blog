@@ -2,8 +2,8 @@ package main
 
 import (
 	logger "github.com/Sirupsen/logrus"
+	"github.com/deadcore/go-blog/api"
 	"os"
-	"api.khazix.co.uk/api"
 )
 
 func main() {
