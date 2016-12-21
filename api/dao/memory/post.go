@@ -1,7 +1,7 @@
 package memory
 
 import (
-	"api.khazix.co.uk/api/model"
+	"github.com/deadcore/go-blog/model"
 	"github.com/kataras/go-errors"
 )
 

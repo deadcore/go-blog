@@ -2,8 +2,8 @@ package api
 
 import (
 	"net/http"
-	"api.khazix.co.uk/api/controller"
-	"api.khazix.co.uk/api/filter"
+	"github.com/deadcore/go-blog/api/controller"
+	"github.com/deadcore/go-blog/api/filter"
 	"strconv"
 	"bytes"
 	logger "github.com/Sirupsen/logrus"

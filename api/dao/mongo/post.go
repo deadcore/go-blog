@@ -1,7 +1,7 @@
 package mongo
 
 import (
-	"api.khazix.co.uk/api/model"
+	"github.com/deadcore/go-blog/api/model"
 	"gopkg.in/mgo.v2/bson"
 )
 

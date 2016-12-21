@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/julienschmidt/httprouter"
 	"net/http"
-	"api.khazix.co.uk/api/dao/mongo"
+	"github.com/deadcore/go-blog/dao/mongo"
 )
 
 func Router() http.Handler {

@@ -1,7 +1,7 @@
 package dao
 
 import (
-	"api.khazix.co.uk/api/model"
+	"github.com/deadcore/go-blog/api/model"
 )
 
 type EntityNotFoundError struct {}
