@@ -1,16 +1,16 @@
 package controller
 
 import (
-	"net/http"
-	"github.com/julienschmidt/httprouter"
-	"github.com/deadcore/go-blog/api/dao"
-	"encoding/json"
-	"github.com/deadcore/go-blog/api/model"
 	"bytes"
+	"encoding/json"
+	"github.com/deadcore/go-blog/api/dao"
+	"github.com/deadcore/go-blog/api/model"
+	"github.com/julienschmidt/httprouter"
+	"net/http"
 )
 
 type PostController struct {
-	postDao dao.PostDao
+	postDao *dao.PostDao `inject:"postDao"`
 }
 
 func (m *PostController) Get(w http.ResponseWriter, r *http.Request, p httprouter.Params) {

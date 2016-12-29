@@ -7,8 +7,7 @@ import (
 )
 
 type (
-	InMemoryPostDao struct {
-	}
+	InMemoryPostDao struct{}
 )
 
 var (
