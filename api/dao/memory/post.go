@@ -6,14 +6,10 @@ import (
 	"strconv"
 )
 
-type (
-	InMemoryPostDao struct{}
-)
+type InMemoryPostDao struct{}
 
-var (
-	arr = make([]model.Post, 16)
-	c   count64
-)
+var arr = make([]model.Post, 16)
+var c count64
 
 func (m *InMemoryPostDao) Get(id string) (model.Post, error) {
 	return findOne(func(post model.Post) bool {
