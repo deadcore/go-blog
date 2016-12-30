@@ -8,11 +8,11 @@ script:
 deploy:
     provider: elasticbeanstalk
     edge: true
-    bucket_name: $ELB_BUCKET
-    app: $ELB_APP
-    env: $ELB_ENV
-    region: $ELB_REGION
+    bucket_name: '$ELB_BUCKET'
+    app: '$ELB_APP'
+    env: '$ELB_ENV'
+    region: '$ELB_REGION'
     access_key_id:
-      secure: $ELB_ACCESS_KEY_ID
+      secure: '$ELB_ACCESS_KEY_ID'
     secret_access_key:
-      secure: $ELB_SECRET_ACCESS_KEY
+      secure: '$ELB_SECRET_ACCESS_KEY'
