@@ -8,11 +8,11 @@ import (
 	"net/http"
 )
 
-type Server struct {
+type Instrance struct {
 	Port string
 }
 
-func (s Server) Start() error {
+func (s Instrance) Start() error {
 	controllers := controller.Router()
 
 	loggingHandler := filter.LoggingHandler(controllers)
@@ -24,7 +24,7 @@ func (s Server) Start() error {
 	return http.ListenAndServe(bindAddress, loggingHandler)
 }
 
-func (s Server) bindAddress() string {
+func (s Instrance) bindAddress() string {
 	var buffer bytes.Buffer
 	buffer.WriteString("127.0.0.1:")
 	buffer.WriteString(s.Port)

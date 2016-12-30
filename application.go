@@ -3,6 +3,7 @@ package main
 import (
 	logger "github.com/Sirupsen/logrus"
 	"os"
+	"github.com/deadcore/go-blog/server"
 )
 
 func main() {
@@ -13,7 +14,7 @@ func main() {
 		port = "5000"
 	}
 
-	var server = Server{
+	var server = server.Instance{
 		Port: port,
 	}
 
