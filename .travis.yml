@@ -6,7 +6,7 @@ script:
  - go test -v ./...
 
 deploy:
-    - provider: elasticbeanstalk
+    provider: elasticbeanstalk
     edge: true
     bucket_name: $ELB_BUCKET
     app: $ELB_APP
