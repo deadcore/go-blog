@@ -7,18 +7,22 @@ import (
 )
 
 func main() {
-	configLogging()
-
 	port, present := os.LookupEnv("PORT")
 	if !present {
 		port = "5000"
 	}
 
-	var server = server.Instance{
+	configLogging()
+
+	startApi(port)
+}
+
+func startApi(port string) {
+	var apiServer = server.Instance{
 		Port: port,
 	}
 
-	err := server.Start()
+	err := apiServer.Start()
 
 	logger.Panic(err)
 }
