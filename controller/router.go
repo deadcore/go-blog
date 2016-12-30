@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"github.com/deadcore/go-blog/api/dao"
-	"github.com/deadcore/go-blog/api/dao/memory"
-	"github.com/deadcore/go-blog/api/dao/mongo"
+	"github.com/deadcore/go-blog/dao"
+	"github.com/deadcore/go-blog/dao/memory"
+	"github.com/deadcore/go-blog/dao/mongo"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 )

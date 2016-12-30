@@ -3,8 +3,8 @@ package controller
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/deadcore/go-blog/api/dao"
-	"github.com/deadcore/go-blog/api/model"
+	"github.com/deadcore/go-blog/dao"
+	"github.com/deadcore/go-blog/model"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 )

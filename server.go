@@ -1,10 +1,10 @@
-package api
+package main
 
 import (
 	"bytes"
 	logger "github.com/Sirupsen/logrus"
-	"github.com/deadcore/go-blog/api/controller"
-	"github.com/deadcore/go-blog/api/filter"
+	"github.com/deadcore/go-blog/controller"
+	"github.com/deadcore/go-blog/filter"
 	"net/http"
 )
 

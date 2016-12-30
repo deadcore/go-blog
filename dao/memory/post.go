@@ -2,7 +2,7 @@ package memory
 
 import (
 	"errors"
-	"github.com/deadcore/go-blog/api/model"
+	"github.com/deadcore/go-blog/model"
 	"strconv"
 )
 
