@@ -31,6 +31,9 @@ _testmain.go
 # external packages folder
 vendor/
 
+# The release build folder when built
+release/
+
 .idea
 main
 *.iml
