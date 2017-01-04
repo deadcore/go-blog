@@ -15,7 +15,8 @@ type Instance struct {
 func (s Instance) Start() error {
 	controllers := controller.Router()
 
-	loggingHandler := filter.LoggingHandler(controllers)
+	jsonHeaderSettingFilter := filter.JsonContentTypeHandler(controllers)
+	loggingHandler := filter.LoggingHandler(jsonHeaderSettingFilter)
 
 	bindAddress := s.bindAddress()
 

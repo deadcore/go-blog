@@ -1,32 +1,12 @@
-package controller
+package post
 
 import (
-	"bytes"
-	"encoding/json"
-	"github.com/deadcore/go-blog/dao"
-	"github.com/deadcore/go-blog/model"
-	"github.com/julienschmidt/httprouter"
 	"net/http"
+	"github.com/julienschmidt/httprouter"
+	"github.com/deadcore/go-blog/model"
+	"encoding/json"
+	"bytes"
 )
-
-type PostController struct {
-	postDao dao.PostDao
-}
-
-func (m *PostController) Get(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	var id = p.ByName("id")
-
-	var post, err = m.postDao.Get(id)
-
-	if err != nil {
-		http.Error(w, "", 404)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-
-	json.NewEncoder(w).Encode(post)
-}
 
 func (m *PostController) Post(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
@@ -51,3 +31,4 @@ func (m *PostController) Post(w http.ResponseWriter, r *http.Request, _ httprout
 	w.WriteHeader(201)
 
 }
+

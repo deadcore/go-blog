@@ -1,12 +1,9 @@
-package controller
+package ping
 
 import (
-	"github.com/julienschmidt/httprouter"
 	"net/http"
+	"github.com/julienschmidt/httprouter"
 )
 
-type PingController struct {}
-
 func (m *PingController) Get(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-
 }

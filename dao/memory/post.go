@@ -8,7 +8,7 @@ import (
 
 type InMemoryPostDao struct{}
 
-var arr = make([]model.Post, 16)
+var arr = make([]model.Post, 0)
 var c count64
 
 func (m *InMemoryPostDao) Get(id string) (model.Post, error) {
@@ -21,6 +21,10 @@ func (m *InMemoryPostDao) Save(post model.Post) model.Post {
 	post.Id = strconv.FormatUint(c.increment(), 10)
 	arr = append(arr, post)
 	return post
+}
+
+func (m *InMemoryPostDao) FindAll() []model.Post {
+	return arr
 }
 
 func findOne(f func(post model.Post) bool) (model.Post, error) {
