@@ -13,8 +13,8 @@ func Router() http.Handler {
 
 	postDao := &memory.InMemoryPostDao{}
 
-	postController := post.New(postDao)
-	pingController := ping.New()
+	postController := post.PostController{PostDao: postDao}
+	pingController := ping.PingController{}
 
 	router := httprouter.New()
 

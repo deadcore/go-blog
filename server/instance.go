@@ -16,7 +16,8 @@ func (s Instance) Start() error {
 	controllers := controller.Router()
 
 	jsonHeaderSettingFilter := filter.JsonContentTypeHandler(controllers)
-	loggingHandler := filter.LoggingHandler(jsonHeaderSettingFilter)
+	corsHandler := filter.CorsHandler(jsonHeaderSettingFilter)
+	loggingHandler := filter.LoggingHandler(corsHandler)
 
 	bindAddress := s.bindAddress()
 

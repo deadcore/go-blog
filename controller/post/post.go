@@ -21,7 +21,7 @@ func (m *PostController) Post(w http.ResponseWriter, r *http.Request, _ httprout
 		return
 	}
 
-	post = m.postDao.Save(post)
+	post = m.PostDao.Save(post)
 
 	var buffer bytes.Buffer
 	buffer.WriteString("/post/")

@@ -7,5 +7,5 @@ import (
 )
 
 func (m *PostController) List(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	json.NewEncoder(w).Encode(m.postDao.FindAll())
+	json.NewEncoder(w).Encode(m.PostDao.FindAll())
 }
