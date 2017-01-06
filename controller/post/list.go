@@ -6,6 +6,10 @@ import (
 	"encoding/json"
 )
 
-func (m *PostController) List(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	json.NewEncoder(w).Encode(m.PostDao.FindAll())
+func (m *postController) List(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	results, err := m.postDao.FindAll()
+	if err != nil {
+		panic(err)
+	}
+	json.NewEncoder(w).Encode(results)
 }

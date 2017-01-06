@@ -8,7 +8,7 @@ import (
 	"bytes"
 )
 
-func (m *PostController) Post(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (m *postController) Post(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
 	var post model.Post
 	if r.Body == nil {
@@ -21,7 +21,7 @@ func (m *PostController) Post(w http.ResponseWriter, r *http.Request, _ httprout
 		return
 	}
 
-	post = m.PostDao.Save(post)
+	post = m.postDao.Save(post)
 
 	var buffer bytes.Buffer
 	buffer.WriteString("/post/")

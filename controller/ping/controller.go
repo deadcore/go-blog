@@ -1,7 +1,7 @@
 package ping
 
-type PingController struct {}
+type pingController struct {}
 
-func New() *PingController {
-	return &PingController{}
+func Controller() *pingController {
+	return &pingController{}
 }

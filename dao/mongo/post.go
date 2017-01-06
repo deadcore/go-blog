@@ -5,11 +5,9 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-type (
-	MongoPostDao struct {
-		Context MongoContext
-	}
-)
+type MongoPostDao struct {
+	Context MongoContext
+}
 
 func (m *MongoPostDao) Get(id string) (model.Post, error) {
 	result := model.Post{}
@@ -21,7 +19,14 @@ func (m *MongoPostDao) Save(post model.Post) model.Post {
 	err := m.Context.GetDatabase().C("posts").Insert(&post)
 
 	if err != nil {
+		panic(err)
 	}
 
 	return post
+}
+
+func (m *MongoPostDao) FindAll() ([]model.Post, error) {
+	results := make([]model.Post, 1)
+
+	return results, m.Context.GetDatabase().C("posts").Find(bson.M{}).All(&results)
 }

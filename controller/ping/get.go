@@ -5,5 +5,5 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func (m *PingController) Get(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func (m *pingController) Get(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 }

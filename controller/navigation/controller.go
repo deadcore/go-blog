@@ -1,5 +1,5 @@
 package navigation
 
-type Controller struct {
+type NavigationController struct {
 
 }
