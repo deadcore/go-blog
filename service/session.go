@@ -7,11 +7,21 @@ import (
 	"time"
 )
 
-type SessionService struct {
-	SessionDao dao.SessionDao
+type SessionService interface {
+	Create(user model.User) model.Session
 }
 
-func (s *SessionService) create(user model.User) model.Session {
+type sessionService struct {
+	sessionDao dao.SessionDao
+}
+
+func NewSessionService(sessionDao dao.SessionDao) SessionService {
+	return &sessionService{
+		sessionDao: sessionDao,
+	}
+}
+
+func (s *sessionService) Create(user model.User) model.Session {
 
 	token, err := uuid.NewRandom()
 
@@ -25,5 +35,5 @@ func (s *SessionService) create(user model.User) model.Session {
 		Expiry: time.Now().Add(time.Hour * 2),
 	}
 
-	return s.SessionDao.Save(session)
+	return s.sessionDao.Save(session)
 }

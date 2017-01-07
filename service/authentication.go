@@ -2,15 +2,26 @@ package service
 
 import "github.com/deadcore/go-blog/model"
 
-type AuthenticationService struct {
-	UserService    UserService
-	SessionService SessionService
+type AuthenticationService interface {
+	Authenticate(username string, password string) model.Session
 }
 
-func (s AuthenticationService) Authenticate(username string, password string) model.Session {
-	user, err := s.UserService.validate(username, password)
+type authenticationService struct {
+	userService    UserService
+	sessionService SessionService
+}
+
+func NewAuthenticationService(userService UserService, sessionService SessionService) AuthenticationService {
+	return &authenticationService{
+		userService: userService,
+		sessionService: sessionService,
+	}
+}
+
+func (s authenticationService) Authenticate(username string, password string) model.Session {
+	user, err := s.userService.Validate(username, password)
 	if err != nil {
 		panic(err)
 	}
-	return s.SessionService.create(user)
+	return s.sessionService.Create(user)
 }

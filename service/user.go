@@ -6,11 +6,21 @@ import (
 	"crypto/sha512"
 )
 
-type UserService struct {
-	UserDao dao.UserDao
+type UserService interface {
+	Validate(email string, password string) (model.User, error)
 }
 
-func (s UserService) validate(email string, password string) (model.User, error) {
+type userService struct {
+	userDao dao.UserDao
+}
+
+func NewUserService(userDao dao.UserDao) UserService {
+	return &userService{
+		userDao: userDao,
+	}
+}
+
+func (s userService) Validate(email string, password string) (model.User, error) {
 	hasedPassword := sha512.Sum512([]byte(password))
-	return s.UserDao.FindByEmailAndPassword(hasedPassword, email)
+	return s.userDao.FindByEmailAndPassword(hasedPassword, email)
 }

@@ -4,27 +4,32 @@ import (
 	"errors"
 	"github.com/deadcore/go-blog/model"
 	"strconv"
+	"github.com/deadcore/go-blog/dao"
 )
 
-type InMemoryPostDao struct{}
+type inMemoryPostDao struct{}
 
 var arr = make([]model.Post, 0)
 var c count64
 
-func (m *InMemoryPostDao) Get(id string) (model.Post, error) {
+func PostDao() dao.PostDao {
+	return &inMemoryPostDao{}
+}
+
+func (m *inMemoryPostDao) Get(id string) (model.Post, error) {
 	return findOne(func(post model.Post) bool {
 		return post.Id == id
 	})
 }
 
-func (m *InMemoryPostDao) Save(post model.Post) model.Post {
+func (m *inMemoryPostDao) Save(post model.Post) model.Post {
 	post.Id = strconv.FormatUint(c.increment(), 10)
 	arr = append(arr, post)
 	return post
 }
 
-func (m *InMemoryPostDao) FindAll() []model.Post {
-	return arr
+func (m *inMemoryPostDao) FindAll() ([]model.Post, error) {
+	return arr, nil
 }
 
 func findOne(f func(post model.Post) bool) (model.Post, error) {

@@ -6,6 +6,7 @@ import (
 	"github.com/deadcore/go-blog/controller"
 	"github.com/deadcore/go-blog/filter"
 	"net/http"
+	"github.com/deadcore/go-blog/context"
 )
 
 type Instance struct {
@@ -13,7 +14,10 @@ type Instance struct {
 }
 
 func (s Instance) Start() error {
-	controllers := controller.Router()
+
+	applicationContext := context.NewApplicationContext()
+
+	controllers := controller.Router(applicationContext)
 
 	jsonHeaderSettingFilter := filter.JsonContentTypeHandler(controllers)
 	corsHandler := filter.CorsHandler(jsonHeaderSettingFilter)

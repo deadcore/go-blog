@@ -1,24 +1,19 @@
 package controller
 
 import (
-	"github.com/deadcore/go-blog/dao/mongo"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"github.com/deadcore/go-blog/controller/post"
 	"github.com/deadcore/go-blog/controller/ping"
 	"github.com/deadcore/go-blog/controller/authentication"
+	"github.com/deadcore/go-blog/context"
 )
 
-func Router() http.Handler {
+func Router(ctx context.ApplicationContext) http.Handler {
 
-	mongoContext := getMongoContext()
-	postDao := &mongo.MongoPostDao{
-		Context: mongoContext,
-	}
-
-	postController := post.Controller(postDao)
+	postController := post.Controller(ctx.DaoContext().PostDao())
 	pingController := ping.Controller()
-	authenticationController := authentication.Controller()
+	authenticationController := authentication.Controller(ctx.ServiceContext().AuthenticationService())
 
 	router := httprouter.New()
 
@@ -31,8 +26,4 @@ func Router() http.Handler {
 	router.POST("/authentication", authenticationController.Post)
 
 	return router
-}
-
-func getMongoContext() mongo.MongoContext {
-	return mongo.NewMongoContext("127.0.0.1", "khazix")
 }
