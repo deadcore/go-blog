@@ -4,28 +4,23 @@ import (
 	logger "github.com/Sirupsen/logrus"
 	"os"
 	"github.com/deadcore/go-blog/server"
+	"github.com/deadcore/go-blog/context"
 )
 
 func main() {
-	port, present := os.LookupEnv("PORT")
-	if !present {
-		port = "5000"
-	}
-
 	configLogging()
 
-	startApi(port)
-}
+	var config = context.Build()
 
-func startApi(port string) {
 	var apiServer = server.Instance{
-		Port: port,
+		Configuration: *config,
 	}
 
 	err := apiServer.Start()
 
 	logger.Panic(err)
 }
+
 
 func configLogging() {
 	// Log as JSON instead of the default ASCII formatter.

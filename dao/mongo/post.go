@@ -4,6 +4,7 @@ import (
 	"github.com/deadcore/go-blog/model"
 	"gopkg.in/mgo.v2/bson"
 	"github.com/deadcore/go-blog/dao"
+	"gopkg.in/mgo.v2"
 )
 
 type mongoPostDao struct {
@@ -18,12 +19,11 @@ func PostDao(context MongoContext) dao.PostDao {
 
 func (m *mongoPostDao) Get(id string) (model.Post, error) {
 	result := model.Post{}
-	return result, m.context.GetDatabase().C("posts").Find(bson.M{"_id": id}).One(&result)
+	return result, hexifyId(m.collection().FindId(id).One, &result)
 }
 
 func (m *mongoPostDao) Save(post model.Post) model.Post {
-	post.Id = bson.NewObjectId().Hex()
-	err := m.context.GetDatabase().C("posts").Insert(&post)
+	err := m.collection().Insert(&post)
 
 	if err != nil {
 		panic(err)
@@ -35,5 +35,9 @@ func (m *mongoPostDao) Save(post model.Post) model.Post {
 func (m *mongoPostDao) FindAll() ([]model.Post, error) {
 	results := make([]model.Post, 1)
 
-	return results, m.context.GetDatabase().C("posts").Find(bson.M{}).All(&results)
+	return results, m.collection().Find(bson.M{}).All(&results)
+}
+
+func (m *mongoPostDao) collection() *mgo.Collection {
+	return m.context.GetDatabase().C("posts")
 }

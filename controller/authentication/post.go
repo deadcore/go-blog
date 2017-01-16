@@ -23,5 +23,13 @@ func (m *authenticationController) Post(w http.ResponseWriter, r *http.Request, 
 		return
 	}
 
-	m.authenticationService.Authenticate(creds.Email, creds.Password)
+	session, err := m.authenticationService.Authenticate(creds.Email, creds.Password)
+
+	if err != nil {
+		http.Error(w, "", 401)
+		return
+	}
+
+	w.Header().Set("x-session-token", session.Token)
+	json.NewEncoder(w).Encode(session)
 }

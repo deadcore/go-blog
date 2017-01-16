@@ -3,7 +3,6 @@ package context
 import (
 	"github.com/deadcore/go-blog/dao"
 	"github.com/deadcore/go-blog/dao/mongo"
-	"github.com/deadcore/go-blog/dao/memory"
 )
 
 type DaoContext interface {
@@ -31,8 +30,10 @@ func (d *daoContext) UserDao() dao.UserDao {
 }
 
 
-func NewMongoDaoContext(host string, database string) DaoContext {
-	mongoContext := getMongoContext(host, database)
+func NewDaoContext(configuration Configuration) DaoContext {
+	var config = configuration.MongoConfiguration
+
+	mongoContext := getMongoContext(config)
 
 	return &daoContext{
 		postDao: mongo.PostDao(mongoContext),
@@ -41,14 +42,6 @@ func NewMongoDaoContext(host string, database string) DaoContext {
 	}
 }
 
-func NewInMemoryDaoContext() DaoContext {
-	return &daoContext{
-		postDao: memory.PostDao(),
-		//userDao: memory.UserDao(),
-		//sessionDao: memory.SessionDao(),
-	}
-}
-
-func getMongoContext(host string, database string) mongo.MongoContext {
-	return mongo.NewMongoContext(host, database)
+func getMongoContext(mongoConfiguration *MongoConfiguration) mongo.MongoContext {
+	return mongo.NewMongoContext(mongoConfiguration.Host, mongoConfiguration.Database)
 }

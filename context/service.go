@@ -28,7 +28,7 @@ func (s serviceContext) AuthenticationService() service.AuthenticationService {
 
 func NewServiceContext(daoContext DaoContext) ServiceContext {
 	userService := service.NewUserService(daoContext.UserDao())
-	sessionService := service.NewSessionService(daoContext.SessionDao())
+	sessionService := service.NewSessionService(daoContext.SessionDao(), daoContext.UserDao())
 	authenticationService := service.NewAuthenticationService(userService, sessionService)
 
 	return &serviceContext{

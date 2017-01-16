@@ -1,5 +1,13 @@
 package register
 
-type AuthenticationController struct {
+import "github.com/deadcore/go-blog/service"
 
+type registrationController struct {
+	userService service.UserService
+}
+
+func Controller(userService service.UserService) *registrationController {
+	return &registrationController{
+		userService: userService,
+	}
 }

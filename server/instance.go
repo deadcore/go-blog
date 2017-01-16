@@ -10,14 +10,15 @@ import (
 )
 
 type Instance struct {
-	Port string
+	Configuration context.Configuration
 }
 
 func (s Instance) Start() error {
 
-	applicationContext := context.NewApplicationContext()
+	applicationContext := context.NewApplicationContext(s.Configuration)
+	router := controller.NewRouter(applicationContext)
 
-	controllers := controller.Router(applicationContext)
+	controllers := router.Build()
 
 	jsonHeaderSettingFilter := filter.JsonContentTypeHandler(controllers)
 	corsHandler := filter.CorsHandler(jsonHeaderSettingFilter)
@@ -33,6 +34,6 @@ func (s Instance) Start() error {
 func (s Instance) bindAddress() string {
 	var buffer bytes.Buffer
 	buffer.WriteString("127.0.0.1:")
-	buffer.WriteString(s.Port)
+	buffer.WriteString(s.Configuration.ServerConfiguration.Port)
 	return buffer.String()
 }

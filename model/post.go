@@ -5,3 +5,11 @@ type Post struct {
 	Content string
 	Title   string
 }
+
+func (p Post) SetId(id string) {
+	p.Id = id
+}
+
+func (p Post) GetId() string {
+	return p.Id
+}

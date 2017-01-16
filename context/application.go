@@ -18,8 +18,8 @@ func (c *applicationContext) ServiceContext() ServiceContext {
 	return c.serviceContext;
 }
 
-func NewApplicationContext() ApplicationContext {
-	daoContext := NewMongoDaoContext("127.0.0.1", "khazix")
+func NewApplicationContext(configuration Configuration) ApplicationContext {
+	daoContext := NewDaoContext(configuration)
 	return &applicationContext{
 		daoContext: daoContext,
 		serviceContext: NewServiceContext(daoContext),

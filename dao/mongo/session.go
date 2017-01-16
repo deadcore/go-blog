@@ -4,6 +4,7 @@ import (
 	"github.com/deadcore/go-blog/model"
 	"gopkg.in/mgo.v2/bson"
 	"github.com/deadcore/go-blog/dao"
+	"gopkg.in/mgo.v2"
 )
 
 type mongoSessionDao struct {
@@ -18,15 +19,24 @@ func SessionDao(context MongoContext) dao.SessionDao {
 
 func (m *mongoSessionDao) Get(id string) (model.Session, error) {
 	result := model.Session{}
-	return result, m.context.GetDatabase().C("session").Find(bson.M{"_id": id}).One(&result)
+	return result, hexifyId(m.collection().FindId(id).One, &result)
 }
 
-func (m *mongoSessionDao) Save(post model.Session) model.Session {
-	err := m.context.GetDatabase().C("session").Insert(&post)
+func (m *mongoSessionDao) FindBySessionToken(sessionToken string) (model.Session, error) {
+	result := model.Session{}
+	return result, hexifyId(m.collection().Find(bson.M{"token": sessionToken}).One, &result)
+}
 
-	if err != nil {
+func (m *mongoSessionDao) Save(session *model.Session) {
+	if err := m.collection().Insert(&session); err != nil {
 		panic(err)
 	}
+}
 
-	return post
+func (m *mongoSessionDao) Delete(id string) error {
+	return m.collection().RemoveId(id)
+}
+
+func (m *mongoSessionDao) collection() *mgo.Collection {
+	return m.context.GetDatabase().C("session")
 }
