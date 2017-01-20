@@ -3,7 +3,7 @@ package model
 import "time"
 
 type Session struct {
-	Id     string `bson:"_id,omitempty"`
+	Id     string
 	UserId string
 	Token  string
 	Expiry time.Time

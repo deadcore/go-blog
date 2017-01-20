@@ -18,18 +18,18 @@ func UserDao(context MongoContext) dao.UserDao {
 }
 
 func (m *mongoUserDao) Get(id string) (model.User, error) {
-	result := model.User{}
-	return result, hexifyId(m.collection().FindId(id).One, &result)
+	user := model.User{}
+	err := m.collection().FindId(id).One(&user)
+
+	return user, err
 }
 
-func (m *mongoUserDao) Save(post model.User) model.User {
-	err := m.collection().Insert(&post)
+func (m *mongoUserDao) Save(user model.User) model.User {
+	objectId := bson.NewObjectId()
+	user.Id = objectId.Hex()
 
-	if err != nil {
-		panic(err)
-	}
-
-	return post
+	m.context.GetDatabase().C("users").UpsertId(objectId, &user)
+	return user
 }
 
 func (m *mongoUserDao) FindByEmailAndPassword(password string, email string) (model.User, error) {
@@ -37,6 +37,6 @@ func (m *mongoUserDao) FindByEmailAndPassword(password string, email string) (mo
 	return result, m.collection().Find(bson.M{"password": password, "email":email}).One(&result)
 }
 
-func (m *mongoUserDao) collection() *mgo.Collection {
+func (m mongoUserDao) collection() *mgo.Collection {
 	return m.context.GetDatabase().C("users")
 }

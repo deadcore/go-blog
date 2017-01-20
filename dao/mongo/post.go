@@ -19,16 +19,14 @@ func PostDao(context MongoContext) dao.PostDao {
 
 func (m *mongoPostDao) Get(id string) (model.Post, error) {
 	result := model.Post{}
-	return result, hexifyId(m.collection().FindId(id).One, &result)
+	return result, m.collection().FindId(id).One(&result)
 }
 
 func (m *mongoPostDao) Save(post model.Post) model.Post {
-	err := m.collection().Insert(&post)
+	objectId := bson.NewObjectId()
+	post.Id = objectId.Hex()
 
-	if err != nil {
-		panic(err)
-	}
-
+	m.context.GetDatabase().C("users").UpsertId(objectId, &post)
 	return post
 }
 

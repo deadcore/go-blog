@@ -19,18 +19,19 @@ func SessionDao(context MongoContext) dao.SessionDao {
 
 func (m *mongoSessionDao) Get(id string) (model.Session, error) {
 	result := model.Session{}
-	return result, hexifyId(m.collection().FindId(id).One, &result)
+	return result, m.collection().FindId(id).One(&result)
 }
 
 func (m *mongoSessionDao) FindBySessionToken(sessionToken string) (model.Session, error) {
 	result := model.Session{}
-	return result, hexifyId(m.collection().Find(bson.M{"token": sessionToken}).One, &result)
+	return result, m.collection().Find(bson.M{"token": sessionToken}).One(&result)
 }
 
 func (m *mongoSessionDao) Save(session *model.Session) {
-	if err := m.collection().Insert(&session); err != nil {
-		panic(err)
-	}
+	objectId := bson.NewObjectId()
+	session.Id = objectId.Hex()
+
+	m.context.GetDatabase().C("users").UpsertId(objectId, &session)
 }
 
 func (m *mongoSessionDao) Delete(id string) error {

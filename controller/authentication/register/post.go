@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"github.com/julienschmidt/httprouter"
 	"encoding/json"
+	"bytes"
 )
 
 type credentials struct {
@@ -24,6 +25,12 @@ func (m *registrationController) Post(w http.ResponseWriter, r *http.Request, _ 
 	}
 
 	user := m.userService.Register(creds.Email, creds.Password)
+
+	var buffer bytes.Buffer
+	buffer.WriteString("/users/")
+	buffer.WriteString(user.Id)
+
+	w.Header().Set("Location", buffer.String())
 
 	json.NewEncoder(w).Encode(user)
 	w.WriteHeader(201)
