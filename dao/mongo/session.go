@@ -31,11 +31,11 @@ func (m *mongoSessionDao) Save(session *model.Session) {
 	objectId := bson.NewObjectId()
 	session.Id = objectId.Hex()
 
-	m.context.GetDatabase().C("users").UpsertId(objectId, &session)
+	m.collection().UpsertId(objectId, &session)
 }
 
 func (m *mongoSessionDao) Delete(id string) error {
-	return m.collection().RemoveId(id)
+	return m.collection().RemoveId(bson.ObjectIdHex(id))
 }
 
 func (m *mongoSessionDao) collection() *mgo.Collection {

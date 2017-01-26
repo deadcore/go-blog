@@ -19,7 +19,7 @@ func UserDao(context MongoContext) dao.UserDao {
 
 func (m *mongoUserDao) Get(id string) (model.User, error) {
 	user := model.User{}
-	err := m.collection().FindId(id).One(&user)
+	err := m.collection().FindId(bson.ObjectIdHex(id)).One(&user)
 
 	return user, err
 }
@@ -28,7 +28,7 @@ func (m *mongoUserDao) Save(user model.User) model.User {
 	objectId := bson.NewObjectId()
 	user.Id = objectId.Hex()
 
-	m.context.GetDatabase().C("users").UpsertId(objectId, &user)
+	m.collection().UpsertId(objectId, &user)
 	return user
 }
 

@@ -34,8 +34,10 @@ func (r router) Build() http.Handler {
 	router := httprouter.New()
 
 	router.GET("/posts/:id", postController.Get)
-	router.POST("/posts", r.authenticatedRoute("ADMIN", postController.Post))
 	router.GET("/posts", postController.List)
+	router.POST("/posts", r.authenticatedRoute("ADMIN", postController.Post))
+	router.PATCH("/posts/:id", r.authenticatedRoute("ADMIN", postController.Patch))
+	router.DELETE("/posts/:id", r.authenticatedRoute("ADMIN", postController.Delete))
 
 	router.GET("/ping", pingController.Get)
 
