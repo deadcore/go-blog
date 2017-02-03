@@ -7,12 +7,12 @@ script:
 
 release:
   mkdir -p release
-  GOOS=linux GOARCH=amd64 go build -o release/go-blog-linux-amd64-$(package)
-  GOOS=linux GOARCH=386 go build -o release/go-blog-linux-386-$(package)
-  GOOS=linux GOARCH=arm go build -o release/go-blog-linux-arm-$(package)
+  GOOS=linux GOARCH=amd64 go build -o release/go-blog-linux-amd64
+  GOOS=linux GOARCH=386 go build -o release/go-blog-linux-386
+  GOOS=linux GOARCH=arm go build -o release/go-blog-linux-arm
 
 before_deploy:
-  - zip -j -r "./release/go-blog-$TRAVIS_BRANCH-v$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" ./release/go-blog-linux-amd64-$(package)
+  - zip -j -r "./release/go-blog-$TRAVIS_BRANCH-v$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" ./release/go-blog-linux-amd64
 
 deploy:
   provider: elasticbeanstalk
