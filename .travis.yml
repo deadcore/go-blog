@@ -12,7 +12,7 @@ release:
   GOOS=linux GOARCH=arm go build -o release/go-blog-linux-arm
 
 before_deploy:
-  - zip -j -r "./release/go-blog-$TRAVIS_BRANCH-v$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" ./release/go-blog-linux-amd64
+  - zip -j -r "./release/go-blog-elb.zip" ./release/go-blog-linux-amd64
 
 deploy:
   provider: elasticbeanstalk
@@ -21,7 +21,7 @@ deploy:
   app: '$ELB_APP'
   env: '$ELB_ENV'
   region: '$ELB_REGION'
-  zip_file: './release/go-blog-$TRAVIS_BRANCH-v$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip'
+  zip_file: './release/go-blog-elb.zip'
   access_key_id:
     secure: '$ELB_ACCESS_KEY_ID'
   secret_access_key:
