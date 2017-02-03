@@ -1,14 +1,16 @@
 language: go
 go:
- - 1.6.3
+  - 1.6.3
 
 script:
- - go test -v ./...
+  - go test -v ./...
 
 script:
   - mkdir -p release
   - GOOS=linux GOARCH=amd64 go build -o release/application
-  - zip -j -r "release/go-blog-elb.zip" release/application
+
+before_deploy:
+  zip -j -r "release/go-blog-elb.zip" release/application
 
 deploy:
   provider: elasticbeanstalk
