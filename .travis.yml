@@ -7,8 +7,8 @@ script:
 
 release:
   mkdir -p release
-  GOOS=linux GOARCH=amd64 go build -o ./release/application
-  zip -j -r "./release/go-blog-elb.zip" ./release/application
+  GOOS=linux GOARCH=amd64 go build -o release/application
+  zip -j -r "release/go-blog-elb.zip" release/application
 
 deploy:
   provider: elasticbeanstalk
