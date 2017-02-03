@@ -18,6 +18,7 @@ before_deploy:
 deploy:
   provider: elasticbeanstalk
   edge: true
+  skip_cleanup: true
   bucket_name: '$ELB_BUCKET'
   app: '$ELB_APP'
   env: '$ELB_ENV'
