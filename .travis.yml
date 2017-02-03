@@ -17,7 +17,7 @@ deploy:
   app: '$ELB_APP'
   env: '$ELB_ENV'
   region: '$ELB_REGION'
-  zip_file: './release/go-blog-elb.zip'
+  zip_file: 'release/go-blog-elb.zip'
   access_key_id:
     secure: '$ELB_ACCESS_KEY_ID'
   secret_access_key:
